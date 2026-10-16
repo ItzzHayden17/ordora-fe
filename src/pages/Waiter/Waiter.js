@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import serverUrl from "../../serverUrl";
 import { QRCodeSVG } from "qrcode.react";
+import PushTest from "../PushTest";
 
 function urlBase64ToUint8Array(base64String) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -912,6 +913,7 @@ async function enablePushNotifications() {
                                 })}
                             </div>
                             <h1>Your service dashboard</h1>
+                            <PushTest/>
                             <p>Keep track of your parties, orders and customer requests.</p>
                         </div>
 
