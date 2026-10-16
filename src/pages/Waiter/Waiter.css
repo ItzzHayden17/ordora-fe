@@ -1,0 +1,1076 @@
+
+/* Search */
+.search input {
+    min-width: 0;
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.search input::placeholder {
+    color: var(--muted, #858585);
+}
+
+/* Order rejection dialog */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgb(0 0 0 / 40%);
+}
+
+.reject-modal {
+    width: 100%;
+    max-width: 440px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    border: 0;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+    color: inherit;
+}
+
+.reject-label {
+    display: block;
+    margin: 16px 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.reject-modal textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid var(--border, #dedede);
+    border-radius: 8px;
+    background: var(--surface, #fff);
+    color: inherit;
+    font: inherit;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.parties-section {
+    margin-top: 18px;
+}
+
+.dashboard-footer {
+    text-align: center;
+    margin: 28px 0 0;
+}
+
+/* Feedback */
+.waiter-notice {
+    position: fixed;
+    z-index: 110;
+    right: 20px;
+    bottom: 20px;
+    max-width: min(420px, calc(100vw - 40px));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--border, #dedede);
+    border-radius: 12px;
+    background: var(--surface, #fff);
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+    font-size: 13px;
+}
+
+.waiter-notice button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.empty-state {
+    padding: 16px 0;
+    color: var(--muted, #858585);
+    font-size: 13px;
+}
+
+.party-qr-modal {
+    width: min(100% - 32px, 460px);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.party-qr-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+}
+
+.party-qr-content p {
+    margin: 0;
+    color: var(--text-muted, #6b7280);
+    line-height: 1.6;
+}
+
+.party-qr-content h3 {
+    margin: 4px 0 0;
+    color: var(--text-primary, #171923);
+}
+
+.party-qr-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.party-qr-content .order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+@media print {
+    body * {
+        visibility: hidden !important;
+    }
+
+    .party-qr-modal,
+    .party-qr-modal * {
+        visibility: visible !important;
+    }
+
+    .party-qr-modal {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+        border: none;
+        box-shadow: none;
+    }
+
+    .party-qr-modal .card-header button,
+    .party-qr-modal .order-actions,
+    .party-qr-modal > .card-body > button {
+        display: none !important;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .modal-actions {
+        flex-wrap: wrap;
+    }
+
+    .waiter-notice {
+        right: 12px;
+        bottom: 12px;
+        max-width: calc(100vw - 24px);
+    }
+}
+
+
+.party-clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.party-clickable:hover {
+    background-color: rgba(91, 69, 214, 0.06);
+}
+
+.party-clickable:focus-visible {
+    outline: 2px solid var(--brand, #5b45d6);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================
+   PARTY BILL MODAL
+   ========================================== */
+
+.party-details-modal {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 620px);
+    max-height: min(88vh, 850px);
+    overflow: hidden;
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 18px;
+    background: var(--surface, #ffffff);
+    box-shadow: 0 24px 70px rgb(15 23 42 / 22%);
+}
+
+.party-details-modal > .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-shrink: 0;
+    padding: 24px 26px 20px;
+    border-bottom: 1px solid var(--border, #e5e7eb);
+}
+
+.party-details-modal > .card-header h2 {
+    margin: 0;
+    color: var(--text-primary, #171923);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.party-details-modal > .card-header p {
+    margin: 6px 0 0;
+    color: var(--text-muted, #737789);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.party-details-modal > .card-header .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 11px;
+    background: #ffffff;
+    color: #454052;
+    font-size: 23px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.party-details-modal > .card-header .icon-button:hover {
+    background: #f5f3ff;
+    border-color: #c9c0ff;
+}
+
+.party-details-modal > .card-body {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 24px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overscroll-behavior: contain;
+}
+
+/* Summary cards */
+
+.party-details-modal .party-billing-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 18px 20px;
+    border: 1px solid #e2ddff;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f7f5ff 0%, #ffffff 100%);
+}
+
+.party-details-modal .party-billing-summary > span {
+    color: #68627d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.party-details-modal .party-billing-summary > strong {
+    color: var(--brand, #5b45d6);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+}
+
+.party-details-modal .party-billing-summary > small {
+    color: #777589;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Section headings */
+
+.party-details-modal .card-body > h3 {
+    margin: 4px 0 -8px;
+    color: var(--text-primary, #171923);
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+/* Combined bill */
+
+.party-details-modal .party-bill-section {
+    overflow: hidden;
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 13px;
+    background: #ffffff;
+}
+
+.party-details-modal .party-bill-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 15px 17px;
+    border-bottom: 1px solid #eeeef3;
+}
+
+.party-details-modal .party-bill-row:last-child {
+    border-bottom: 0;
+}
+
+.party-details-modal .party-bill-row > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+}
+
+.party-details-modal .party-bill-row > div > strong {
+    color: #252336;
+    font-size: 14px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.party-details-modal .party-bill-row small {
+    display: block;
+    color: #777789;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.party-details-modal .party-bill-row > strong {
+    flex-shrink: 0;
+    color: #252336;
+    font-size: 14px;
+    font-weight: 750;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.party-details-modal .party-bill-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 17px;
+    background: #f8f7ff;
+    border-top: 1px solid #e7e2ff;
+}
+
+.party-details-modal .party-bill-total strong {
+    color: #33276f;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.party-details-modal .party-bill-total strong:last-child {
+    font-size: 17px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Individual bills */
+
+
+/* ==========================================
+   INDIVIDUAL BILL ACCORDION
+   ========================================== */
+
+.party-details-modal .individual-bill {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid #e7e5ef;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgb(25 20 50 / 3%);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.party-details-modal .individual-bill:hover {
+    border-color: #cfc7ff;
+}
+
+.party-details-modal .individual-bill[open] {
+    border-color: #c9c0ff;
+    box-shadow: 0 4px 14px rgb(91 69 214 / 7%);
+}
+
+/* Remove the browser's default triangle */
+
+.party-details-modal .individual-bill summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+    padding: 14px 16px;
+    cursor: pointer;
+    list-style: none;
+    background: #fff;
+    transition: background 0.2s ease;
+}
+
+.party-details-modal .individual-bill summary::-webkit-details-marker {
+    display: none;
+}
+
+.party-details-modal .individual-bill summary:hover {
+    background: #faf9ff;
+}
+
+.party-details-modal .individual-bill[open] summary {
+    background: #f8f6ff;
+    border-bottom: 1px solid #e9e4ff;
+}
+
+/* Chevron */
+
+.party-details-modal .individual-bill summary::before {
+    content: "";
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    margin: 0 4px 3px 2px;
+    border-right: 2px solid #7864db;
+    border-bottom: 2px solid #7864db;
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+}
+
+.party-details-modal .individual-bill[open] summary::before {
+    transform: rotate(45deg);
+    margin-bottom: 4px;
+}
+
+/* Customer name */
+
+.party-details-modal .individual-bill summary span {
+    flex: 1;
+    min-width: 0;
+    color: #252238;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+/* Amount badge */
+
+.party-details-modal .individual-bill summary strong {
+    flex-shrink: 0;
+    padding: 8px 11px;
+    border: 1px solid #e5dfff;
+    border-radius: 9px;
+    background: #f4f1ff;
+    color: #5942c5;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Expanded order details */
+
+.party-details-modal .individual-bill-content {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 16px 8px;
+    background: #fff;
+}
+
+.party-details-modal .individual-bill-content .party-bill-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 0;
+    border-bottom: 1px solid #f0eef5;
+}
+
+.party-details-modal .individual-bill-content .party-bill-row:last-child {
+    border-bottom: none;
+}
+
+.party-details-modal .individual-bill-content .party-bill-row > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+}
+
+.party-details-modal .individual-bill-content .party-bill-row > div > strong {
+    color: #343047;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.party-details-modal .individual-bill-content .party-bill-row small {
+    color: #777489;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.party-details-modal .individual-bill-content .party-bill-row > strong {
+    flex-shrink: 0;
+    color: #29253b;
+    font-size: 13px;
+    font-weight: 750;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Keyboard accessibility */
+
+.party-details-modal .individual-bill summary:focus-visible {
+    outline: 2px solid #5b45d6;
+    outline-offset: -3px;
+    border-radius: 12px;
+}
+
+/* Small screens */
+
+@media (max-width: 600px) {
+    .party-details-modal .individual-bill summary {
+        min-height: 66px;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .party-details-modal .individual-bill summary span {
+        font-size: 13px;
+    }
+
+    .party-details-modal .individual-bill summary strong {
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    .party-details-modal .individual-bill-content {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+}
+
+
+/* Empty bill states */
+
+.party-details-modal .empty-state {
+    margin: 0;
+    padding: 18px;
+    color: #777789;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Informational text */
+
+.party-details-modal .small {
+    margin: -5px 0 0;
+    color: #777789;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+/* Modal actions */
+
+.party-details-modal .party-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border, #e5e7eb);
+}
+
+.party-details-modal .party-modal-actions .btn {
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 11px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Overlay */
+
+.modal-overlay:has(.party-details-modal) {
+    padding: 24px;
+    backdrop-filter: blur(4px);
+    background: rgb(20 18 35 / 48%);
+}
+
+/* Responsive layout */
+
+@media (max-width: 600px) {
+    .modal-overlay:has(.party-details-modal) {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .party-details-modal {
+        width: 100%;
+        max-height: 92dvh;
+        border-radius: 16px;
+    }
+
+    .party-details-modal > .card-header {
+        padding: 19px 18px 16px;
+    }
+
+    .party-details-modal > .card-header h2 {
+        font-size: 19px;
+    }
+
+    .party-details-modal > .card-body {
+        gap: 15px;
+        padding: 18px;
+    }
+
+    .party-details-modal .party-billing-summary {
+        padding: 16px;
+    }
+
+    .party-details-modal .party-billing-summary > strong {
+        font-size: 25px;
+    }
+
+    .party-details-modal .party-bill-row {
+        gap: 10px;
+        padding: 13px;
+    }
+
+    .party-details-modal .party-bill-total {
+        padding: 14px;
+    }
+
+    .party-details-modal .party-modal-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .party-details-modal .party-modal-actions .btn {
+        width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .party-details-modal .party-modal-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ================================
+   PARTY BILL DROPDOWNS
+================================ */
+
+.bill-dropdown {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #e6e7ef;
+    border-radius: 14px;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bill-dropdown[open] {
+    border-color: #c9c2fa;
+    box-shadow: 0 4px 16px rgba(46, 36, 100, 0.06);
+}
+
+.bill-dropdown + .bill-dropdown {
+    margin-top: 10px;
+}
+
+.bill-dropdown-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.bill-dropdown-summary::-webkit-details-marker {
+    display: none;
+}
+
+.bill-dropdown-summary::marker {
+    content: "";
+}
+
+.bill-dropdown-summary:hover {
+    background: #faf9ff;
+}
+
+.bill-dropdown-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.bill-dropdown-heading > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.bill-dropdown-heading > div > strong {
+    color: #25223a;
+    font-size: 14px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.bill-dropdown-heading small {
+    color: #77758a;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.bill-dropdown-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #f0edff;
+    font-size: 19px;
+}
+
+.individual-icon {
+    background: #fff1df;
+    color: #a75a12;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.bill-dropdown-total {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.bill-dropdown-total > strong {
+    color: #30256f;
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bill-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+    background: #f2f1f8;
+    color: #625c83;
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.bill-dropdown[open] .bill-chevron {
+    transform: rotate(180deg);
+}
+
+.bill-dropdown-content {
+    padding: 0 14px 14px;
+    border-top: 1px solid #f0eff6;
+}
+
+.bill-order-card {
+    padding: 14px 2px;
+    border-bottom: 1px solid #efedf5;
+}
+
+.bill-order-card:last-of-type {
+    border-bottom: none;
+}
+
+.bill-order-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.bill-order-header > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.bill-order-header > div:first-child > strong {
+    color: #302b46;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.bill-order-header small {
+    color: #89869b;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.bill-order-header > strong,
+.bill-order-meta > strong {
+    color: #30256f;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bill-order-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.bill-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: #f0edff;
+    color: #5945ba;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.bill-status-confirmed {
+    background: #e7f8ee;
+    color: #187644;
+}
+
+.bill-status-pending {
+    background: #fff4dc;
+    color: #986000;
+}
+
+.bill-status-rejected {
+    background: #ffebeb;
+    color: #b42318;
+}
+
+.bill-order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 13px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f8f8fc;
+}
+
+.bill-item-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 8px;
+    color: #5f5b73;
+    font-size: 12px;
+}
+
+.bill-item-quantity {
+    color: #817b9d;
+    font-weight: 700;
+}
+
+.bill-item-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.bill-item-price {
+    color: #38334e;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.bill-dropdown-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 8px;
+    padding: 14px 12px;
+    border-radius: 10px;
+    background: #f2efff;
+    color: #393064;
+    font-size: 13px;
+}
+
+.bill-dropdown-footer strong {
+    color: #30256f;
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.individual-bills-section {
+    margin-top: 26px;
+}
+
+.individual-bills-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.individual-bills-heading h3 {
+    margin: 0;
+    color: #28243d;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.individual-bills-heading p {
+    margin: 5px 0 0;
+    color: #858196;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.bill-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 9px;
+    background: #fff0df;
+    color: #a65b16;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.individual-bills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.individual-bill-dropdown .bill-dropdown-summary {
+    padding: 13px;
+}
+
+.individual-content {
+    background: #fdfdff;
+}
+
+.bill-empty {
+    margin: 12px 0 0;
+    padding: 18px;
+    border: 1px dashed #dcd9e9;
+    border-radius: 12px;
+    color: #817d92;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.individual-empty strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #4a4561;
+}
+
+.individual-empty p {
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .bill-dropdown-summary {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .bill-dropdown-heading {
+        gap: 9px;
+    }
+
+    .bill-dropdown-icon {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .bill-dropdown-total {
+        gap: 6px;
+    }
+
+    .bill-dropdown-total > strong {
+        font-size: 13px;
+    }
+
+    .bill-chevron {
+        width: 22px;
+        height: 22px;
+    }
+
+    .bill-dropdown-content {
+        padding: 0 10px 10px;
+    }
+
+    .bill-order-header {
+        gap: 8px;
+    }
+
+    .individual-bills-heading h3 {
+        font-size: 15px;
+    }
+}

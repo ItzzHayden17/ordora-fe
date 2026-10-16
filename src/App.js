@@ -1,24 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import Admin from './pages/Admin/Admin';
+import Party from './pages/Party/Party';
+import Waiter from './pages/Waiter/Waiter';
+import ManageMenu from "./pages/ManageMenu/ManageMenu";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/admin' element={<Admin/>}/>
+      <Route path="/admin/menu" element={<ManageMenu />} />
+
+      <Route path='/waiter' element={<Waiter/>}/>
+      
+      <Route path='/party' element={<Party/>}/>
+
+    </Routes>
+    </BrowserRouter>
+    
   );
 }
 
